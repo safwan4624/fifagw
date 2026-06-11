@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper: check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email_verified == true &&
+             request.auth.token.email in ['safwan4624@gmail.com'];
+    }
+    
+    // Helper: check if user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      // Any signed-in user can read all user profiles (for leaderboard)
+      allow read: if isSignedIn();
+      
+      // Users can create their own profile
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      
+      // Users can update their own profile, admin can update anyone (for points)
+      allow update: if isSignedIn() && 
+                       (request.auth.uid == userId || isAdmin());
+                       
+      // Admin can delete users (for resetting DB)
+      allow delete: if isAdmin();
+    }
+    
+    // Fixtures collection
+    match /fixtures/{fixtureId} {
+      // Any signed-in user can read fixtures
+      allow read: if isSignedIn();
+      
+      // Only admin can create, update, or delete fixtures
+      allow write: if isAdmin();
+    }
+    
+    // Predictions collection
+    match /predictions/{predictionId} {
+      // Any signed-in user can read predictions
+      allow read: if isSignedIn();
+      
+      // Users can create/update their own predictions before lock time
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid &&
+        request.time < (
+          get(/databases/$(database)/documents/fixtures/$(request.resource.data.fixtureId)).data.kickoffTime 
+          - duration.value(1, 'h')
+        );
+      
+      allow update: if isSignedIn() &&
+        resource.data.userId == request.auth.uid &&
+        request.time < (
+          get(/databases/$(database)/documents/fixtures/$(request.resource.data.fixtureId)).data.kickoffTime 
+          - duration.value(1, 'h')
+        );
+      
+      // Admin can update predictions (for point calculation)
+      allow update: if isAdmin();
+      
+      // Admin can delete predictions (for resetting DB)
+      allow delete: if isAdmin();
+    }
+  }
+}

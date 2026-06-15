@@ -73,7 +73,7 @@ export default function LeaderboardPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'posibolt-leaderboard.png';
+    a.download = 'graphwhite-leaderboard.png';
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -83,17 +83,17 @@ export default function LeaderboardPage() {
     setIsExporting(true);
     try {
       // Temporarily ensure the element is properly staged for html2canvas
-      const canvas = await html2canvas(exportRef.current, { 
-        useCORS: true, 
+      const canvas = await html2canvas(exportRef.current, {
+        useCORS: true,
         backgroundColor: '#0a0e1a',
         scale: 2 // High res
       });
-      
+
       canvas.toBlob(async (blob) => {
         if (!blob) throw new Error('Canvas to Blob failed');
-        
-        const file = new File([blob], 'posibolt-leaderboard.png', { type: 'image/png' });
-        
+
+        const file = new File([blob], 'graphwhite-leaderboard.png', { type: 'image/png' });
+
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
@@ -141,8 +141,8 @@ export default function LeaderboardPage() {
               <h1 className="page-title">Leaderboard</h1>
               <p className="page-subtitle">Live standings</p>
             </div>
-            <button 
-              className="btn btn-primary btn-sm" 
+            <button
+              className="btn btn-primary btn-sm"
               onClick={handleShare}
               disabled={isExporting}
               style={{ display: 'flex', alignItems: 'center', gap: '8px' }}

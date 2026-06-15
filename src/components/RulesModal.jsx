@@ -10,7 +10,7 @@ export default function RulesModal() {
       <div className="modal-content card-glass" style={{ width: '100%', maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto', borderRadius: 'var(--radius-xl)', padding: '0' }}>
 
         <div style={{ padding: 'var(--space-6)', borderBottom: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>Welcome to POSIBOLT FIFA WORLD CUP '26</h2>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>Welcome to GRAPHWHITE FIFA WORLD CUP '26</h2>
           <p style={{ color: 'var(--text-subtle)' }}>Please review the rules before you start predicting.</p>
         </div>
 

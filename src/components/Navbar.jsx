@@ -20,7 +20,7 @@ export default function Navbar() {
       <div className="navbar-inner">
         <NavLink to="/fixtures" className="navbar-brand">
           <img src={logoImg} alt="Logo" className="navbar-logo" style={{ width: '28px', height: '28px', objectFit: 'contain' }} />
-          <span className="navbar-title">POSIBOLT FIFA WORLD CUP '26</span>
+          <span className="navbar-title">GRAPHWHITE FIFA WORLD CUP '26</span>
         </NavLink>
 
         <button
@@ -77,8 +77,8 @@ export default function Navbar() {
           </div>
 
           <div className="navbar-user" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <button 
-              onClick={toggleTheme} 
+            <button
+              onClick={toggleTheme}
               style={{ background: 'transparent', border: 'none', fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%' }}
               title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >

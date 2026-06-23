@@ -1567,3 +1567,330 @@
     font-size: var(--text-xl);
   }
 }
+
+/* ============================================================
+   MATCH PREDICTIONS MODAL
+   ============================================================ */
+
+/* "View All Predictions" button on completed match cards */
+.btn-view-predictions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary-light);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.btn-view-predictions:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Modal container */
+.match-pred-modal {
+  width: 100%;
+  max-width: 640px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  animation: fadeInScale 0.28s var(--ease-spring);
+}
+
+/* Header */
+.match-pred-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  flex-shrink: 0;
+}
+
+.match-pred-modal-teams {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pred-team-flag {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.pred-match-score-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pred-team-name {
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.pred-actual-score {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 0 var(--space-2);
+}
+
+/* Summary chips */
+.pred-summary-chips {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pred-summary-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.pred-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  min-width: 70px;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.pred-chip-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.pred-chip-total {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+
+.pred-chip-exact {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--color-success-light);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.pred-chip-correct {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--color-primary-light);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.pred-chip-wrong {
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--color-error-light);
+  border: 1px solid rgba(244, 63, 94, 0.15);
+}
+
+/* Body */
+.match-pred-modal-body {
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Predictions list */
+.pred-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.pred-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background var(--transition-fast);
+}
+
+.pred-row:last-child {
+  border-bottom: none;
+}
+
+.pred-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Outcome-based row highlights */
+.pred-row.pred-outcome-exact {
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.pred-row.pred-outcome-exact:hover {
+  background: rgba(16, 185, 129, 0.09);
+}
+
+.pred-row.pred-outcome-correct {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+.pred-row.pred-outcome-correct:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.pred-row.pred-outcome-wrong {
+  opacity: 0.75;
+}
+
+/* Rank number */
+.pred-rank {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-subtle);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* User info */
+.pred-user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.pred-user-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Score cell */
+.pred-scores-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  min-width: 64px;
+  justify-content: center;
+}
+
+.pred-score-sep {
+  color: var(--text-subtle);
+}
+
+/* Outcome badge */
+.pred-outcome-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.pred-outcome-badge.pred-outcome-exact {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-success-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pred-outcome-badge.pred-outcome-correct {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary-light);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.pred-outcome-badge.pred-outcome-wrong {
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--color-error-light);
+  border: 1px solid rgba(244, 63, 94, 0.15);
+}
+
+/* Points badge */
+.pred-points-badge {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-accent);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Avatar extras */
+.avatar-xs {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary);
+  color: white;
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .match-pred-modal-header {
+    padding: var(--space-4);
+  }
+
+  .pred-row {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .pred-summary-chips {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .pred-team-name {
+    display: none;
+  }
+
+  .pred-outcome-badge {
+    display: none;
+  }
+}
+

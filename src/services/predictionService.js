@@ -5,6 +5,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   onSnapshot,
   writeBatch,
   increment,
@@ -101,6 +102,56 @@ export function subscribeToFixturePredictions(fixtureId, callback) {
       ...d.data(),
     }));
     callback(predictions);
+  });
+}
+
+/**
+ * Subscribe to all predictions for a specific fixture, enriched with user info.
+ * Fetches user displayName, photoURL for each prediction.
+ * @param {string} fixtureId
+ * @param {(predictions: Array) => void} callback
+ * @returns {() => void} unsubscribe
+ */
+export function subscribeToFixturePredictionsWithUsers(fixtureId, callback) {
+  const q = query(
+    collection(db, PREDICTIONS_COL),
+    where('fixtureId', '==', fixtureId)
+  );
+
+  return onSnapshot(q, async (snapshot) => {
+    const predictions = snapshot.docs.map((d) => ({
+      id: d.id,
+      ...d.data(),
+    }));
+
+    // Fetch user info for each unique userId
+    const uniqueUserIds = [...new Set(predictions.map((p) => p.userId))];
+    const userMap = {};
+    await Promise.all(
+      uniqueUserIds.map(async (uid) => {
+        try {
+          const userDoc = await getDoc(doc(db, USERS_COL, uid));
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            userMap[uid] = {
+              displayName: data.displayName ?? 'Anonymous',
+              photoURL: data.photoURL ?? '',
+            };
+          } else {
+            userMap[uid] = { displayName: 'Anonymous', photoURL: '' };
+          }
+        } catch {
+          userMap[uid] = { displayName: 'Anonymous', photoURL: '' };
+        }
+      })
+    );
+
+    const enriched = predictions.map((p) => ({
+      ...p,
+      ...userMap[p.userId],
+    }));
+
+    callback(enriched);
   });
 }
 

@@ -7,6 +7,7 @@ import { TOURNAMENT_ROUNDS } from '../config/rounds';
 import MatchCard from '../components/MatchCard';
 import Navbar from '../components/Navbar';
 import LoadingSpinner from '../components/LoadingSpinner';
+import MatchPredictionsModal from '../components/MatchPredictionsModal';
 
 export default function FixturesPage() {
   const { user } = useAuth();
@@ -16,6 +17,7 @@ export default function FixturesPage() {
   const [statusFilter, setStatusFilter] = useState('open');
   const [expandedDate, setExpandedDate] = useState(null);
   const [hasAutoExpanded, setHasAutoExpanded] = useState(false);
+  const [selectedFixture, setSelectedFixture] = useState(null);
 
   // Subscribe to fixtures
   useEffect(() => {
@@ -202,6 +204,7 @@ export default function FixturesPage() {
                           fixture={fixture}
                           prediction={predictions[fixture.id]}
                           matchNumber={matchNum}
+                          onShowPredictions={setSelectedFixture}
                         />
                       );
                     })}
@@ -226,6 +229,14 @@ export default function FixturesPage() {
           </div>
         )}
       </div>
+
+      {/* Match predictions modal */}
+      {selectedFixture && (
+        <MatchPredictionsModal
+          fixture={selectedFixture}
+          onClose={() => setSelectedFixture(null)}
+        />
+      )}
     </div>
   );
 }

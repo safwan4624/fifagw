@@ -8,7 +8,7 @@ import ScoreInput from './ScoreInput';
 import CountdownTimer from './CountdownTimer';
 import { useCountdown } from '../hooks/useCountdown';
 
-export default function MatchCard({ fixture, prediction, matchNumber }) {
+export default function MatchCard({ fixture, prediction, matchNumber, onShowPredictions }) {
   const { user } = useAuth();
   const toast = useToast();
   const [homeScore, setHomeScore] = useState('');
@@ -54,7 +54,7 @@ export default function MatchCard({ fixture, prediction, matchNumber }) {
     }
   };
 
-  const gotExactScore = prediction?.points > 0;
+  const gotExactScore = prediction?.pointsAwarded >= 3;
 
   return (
     <div className={`match-card card-glass ${isCompleted ? 'match-card-completed' : ''} ${gotExactScore ? 'match-card-correct' : ''}`} style={{ position: 'relative' }} id={`match-${fixture.id}`}>
@@ -170,6 +170,17 @@ export default function MatchCard({ fixture, prediction, matchNumber }) {
             </div>
           )}
         </div>
+      )}
+
+      {/* View all predictions button — shown in result tab */}
+      {isCompleted && onShowPredictions && (
+        <button
+          className="btn-view-predictions"
+          onClick={() => onShowPredictions(fixture)}
+          id={`view-preds-${fixture.id}`}
+        >
+          <span>👥</span> View All Predictions
+        </button>
       )}
 
       {/* Countdown for upcoming matches */}

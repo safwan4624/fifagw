@@ -1600,297 +1600,265 @@
   transform: translateY(-1px);
 }
 
-/* Modal container */
-.match-pred-modal {
+/* ── Shell ── */
+.mpm-shell {
   width: 100%;
-  max-width: 640px;
+  max-width: 460px;
   max-height: 88vh;
   display: flex;
   flex-direction: column;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  animation: fadeInScale 0.28s var(--ease-spring);
+  animation: fadeInScale 0.25s var(--ease-spring);
 }
 
-/* Header */
-.match-pred-modal-header {
+/* ── Title bar ── */
+.mpm-titlebar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--space-5) var(--space-6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  justify-content: center;
+  position: relative;
+  padding: var(--space-5) var(--space-6) var(--space-4);
   flex-shrink: 0;
 }
 
-.match-pred-modal-teams {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+.mpm-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
-.pred-team-flag {
-  font-size: 1.8rem;
+.mpm-close {
+  position: absolute;
+  right: var(--space-5);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.mpm-close:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Match summary line ── */
+.mpm-match-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-6) var(--space-4);
+  flex-shrink: 0;
+}
+
+.mpm-flag {
+  font-size: 1.35rem;
   line-height: 1;
 }
 
-.pred-match-score-block {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.pred-team-name {
-  font-weight: 700;
+.mpm-team {
   font-size: var(--text-sm);
+  font-weight: 700;
   color: var(--text-primary);
 }
 
-.pred-actual-score {
+.mpm-score {
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 800;
   color: var(--text-primary);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   padding: 0 var(--space-2);
 }
 
-/* Summary chips */
-.pred-summary-chips {
-  display: flex;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+/* ── Divider ── */
+.mpm-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
   flex-shrink: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
 
-.pred-summary-chips::-webkit-scrollbar {
-  display: none;
-}
-
-.pred-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-md);
-  min-width: 70px;
-  flex-shrink: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 700;
-}
-
-.pred-chip-label {
-  font-family: var(--font-sans);
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-top: 2px;
-}
-
-.pred-chip-total {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
-}
-
-.pred-chip-exact {
-  background: rgba(16, 185, 129, 0.12);
-  color: var(--color-success-light);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.pred-chip-correct {
-  background: rgba(59, 130, 246, 0.12);
-  color: var(--color-primary-light);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.pred-chip-wrong {
-  background: rgba(244, 63, 94, 0.1);
-  color: var(--color-error-light);
-  border: 1px solid rgba(244, 63, 94, 0.15);
-}
-
-/* Body */
-.match-pred-modal-body {
+/* ── Scrollable body ── */
+.mpm-body {
   overflow-y: auto;
   flex: 1;
+  padding: var(--space-3) var(--space-4);
 }
 
-/* Predictions list */
-.pred-list {
+/* ── List ── */
+.mpm-list {
   display: flex;
   flex-direction: column;
+  gap: var(--space-2);
 }
 
-.pred-row {
+/* ── Row ── */
+.mpm-row {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 4px solid transparent;
   transition: background var(--transition-fast);
 }
 
-.pred-row:last-child {
-  border-bottom: none;
+.mpm-row:hover {
+  background: rgba(255, 255, 255, 0.07);
 }
 
-.pred-row:hover {
-  background: rgba(255, 255, 255, 0.03);
+/* Left-border colour by outcome */
+.mpm-row.pred-row-exact {
+  border-left-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.06);
 }
 
-/* Outcome-based row highlights */
-.pred-row.pred-outcome-exact {
-  background: rgba(16, 185, 129, 0.05);
-}
-
-.pred-row.pred-outcome-exact:hover {
-  background: rgba(16, 185, 129, 0.09);
-}
-
-.pred-row.pred-outcome-correct {
+.mpm-row.pred-row-correct {
+  border-left-color: #3b82f6;
   background: rgba(59, 130, 246, 0.04);
 }
 
-.pred-row.pred-outcome-correct:hover {
-  background: rgba(59, 130, 246, 0.08);
+.mpm-row.pred-row-wrong {
+  border-left-color: rgba(255, 255, 255, 0.12);
+  opacity: 0.7;
 }
 
-.pred-row.pred-outcome-wrong {
-  opacity: 0.75;
+/* ── Avatar wrapper (for crown overlay) ── */
+.mpm-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
 }
 
-/* Rank number */
-.pred-rank {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  color: var(--text-subtle);
-  min-width: 28px;
-  text-align: right;
+.mpm-crown {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  line-height: 1;
+  z-index: 2;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
 }
 
-/* User info */
-.pred-user-info {
+.mpm-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  flex: 1;
-  min-width: 0;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.pred-user-name {
+.mpm-avatar-letter {
+  background: var(--gradient-primary);
+  color: white;
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+/* ── Name ── */
+.mpm-name {
+  flex: 1;
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-primary);
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Score cell */
-.pred-scores-cell {
+/* ── Right: score + pts ── */
+.mpm-right {
   display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--text-base);
-  color: var(--text-primary);
-  min-width: 64px;
-  justify-content: center;
-}
-
-.pred-score-sep {
-  color: var(--text-subtle);
-}
-
-/* Outcome badge */
-.pred-outcome-badge {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.pred-outcome-badge.pred-outcome-exact {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--color-success-light);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.pred-outcome-badge.pred-outcome-correct {
-  background: rgba(59, 130, 246, 0.15);
-  color: var(--color-primary-light);
-  border: 1px solid rgba(59, 130, 246, 0.25);
-}
-
-.pred-outcome-badge.pred-outcome-wrong {
-  background: rgba(244, 63, 94, 0.1);
-  color: var(--color-error-light);
-  border: 1px solid rgba(244, 63, 94, 0.15);
-}
-
-/* Points badge */
-.pred-points-badge {
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--color-accent);
-  min-width: 32px;
-  text-align: right;
-}
-
-/* Avatar extras */
-.avatar-xs {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
-  object-fit: cover;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
   flex-shrink: 0;
 }
 
-.avatar-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-primary);
-  color: white;
+.mpm-pred-score {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.mpm-pts {
   font-size: var(--text-xs);
   font-weight: 700;
 }
 
+.mpm-pts.pts-exact  { color: #60a5fa; }
+.mpm-pts.pts-correct { color: #60a5fa; }
+.mpm-pts.pts-wrong  { color: var(--text-subtle); }
+
+/* ── Mobile ── */
 @media (max-width: 480px) {
-  .match-pred-modal-header {
-    padding: var(--space-4);
+  .mpm-shell {
+    max-width: 100%;
   }
 
-  .pred-row {
-    padding: var(--space-3) var(--space-4);
+  .mpm-titlebar {
+    padding: var(--space-4) var(--space-5) var(--space-3);
+  }
+
+  .mpm-team {
+    display: none;
+  }
+
+  .mpm-row {
+    padding: var(--space-3);
     gap: var(--space-2);
   }
+}
 
-  .pred-summary-chips {
-    padding: var(--space-3) var(--space-4);
-  }
 
-  .pred-team-name {
-    display: none;
-  }
+/* "View All Predictions" button on completed match cards */
+.btn-view-predictions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary-light);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
 
-  .pred-outcome-badge {
-    display: none;
-  }
+.btn-view-predictions:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
 }
 
